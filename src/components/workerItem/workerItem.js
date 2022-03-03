@@ -10,6 +10,10 @@ const WorkerItem = (props) => {
     const {worker} = useSelector(state => state.workers)
     const {company} = useSelector(state => state.companies)
    const [showDelete, setDelete] = useState(false)
+    const changeInputValue = () => {
+        setinputValue(true)
+    }
+    const [inputValue, setinputValue] = useState(false)
     const dispatch = useDispatch();
     const {register, formState: {errors}, handleSubmit, control, setValue, getValues} = useForm({
         defaultValues: {
@@ -18,6 +22,24 @@ const WorkerItem = (props) => {
             mobile: ''
         }
     });
+    const editDefault = () => {
+        setValue('address', worker.address)
+        setValue('name', worker.name)
+        setValue('mobile', worker.mobile)
+    }
+    useEffect(() => {
+        if(!inputValue){
+            editDefault()
+
+        }
+
+    }, [editDefault]);
+    useEffect(()=>{
+        return ()=>{
+            setinputValue(false)
+        }
+    }, [])
+
     const [showEditForm, setShowEditForm] = useState(false);
     const getEditForm = () => {
         setShowEditForm(!showEditForm)
@@ -25,19 +47,13 @@ const WorkerItem = (props) => {
             dispatch(getWorker(companyId, id))
         }
     };
-    const editDefault = () => {
-        setValue('address', worker.address)
-        setValue('name', worker.name)
-        setValue('mobile', worker.mobile)
-    }
-    useEffect(() => {
-        editDefault()
-
-    }, [editDefault])
 
     const onSubmit = async (data) => {
+
         await dispatch(editWorker(companyId, id, data))
         await dispatch(getWorker(companyId, id))
+        setinputValue(false)
+
 
     }
     const deleteWorkerData = async () => {
@@ -88,7 +104,7 @@ const WorkerItem = (props) => {
                             <h4>Address</h4>
                             <input
                                 className={errors?.address?.type === 'required' || errors?.address?.type === 'maxLength' ? 'input-item-invalid' : ''}
-                                {...register('address', {required: true, maxLength: 100})}
+                                {...register('address', {required: true, maxLength: 100,onChange: () => changeInputValue()})}
                                 placeholder={'address'}
                             />
                             {errors.address && errors.address.type === 'required' &&
@@ -101,7 +117,7 @@ const WorkerItem = (props) => {
                             <h4>Mobile</h4>
                             <input type={'text'}
                                    className={errors?.mobile?.type === 'required' ? 'input-item-invalid' : ''}
-                                   {...register('mobile', {required: true}
+                                   {...register('mobile', {required: true,onChange: () => changeInputValue()}
                                    )}
                                    placeholder={'mobile'}
                             />
@@ -113,7 +129,7 @@ const WorkerItem = (props) => {
                             <h4>Name</h4>
                             <input
                                 className={errors?.name?.type === 'maxLength' || errors?.name?.type === 'required' ? 'input-item-invalid' : ''}
-                                {...register('name', {required: true, maxLength: 100})}
+                                {...register('name', {required: true, maxLength: 100,onChange: () => changeInputValue()})}
                                 placeholder={'name'}
                             />
                             {errors.name && errors.name.type === 'maxLength' &&

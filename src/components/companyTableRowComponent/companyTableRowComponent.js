@@ -5,7 +5,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {getCompanyData} from "../../redux/companies/actions";
 import {getWorkers} from "../../redux/workers/actions";
 import plus from '../../images/plus.png';
-import worker from '../../images/employee.png';
 import edit from '../../images/edit.png';
 const CompanyTableRowComponent = (props) => {
     const {name,email, address, id, getModalEdit, getWorkersModal, closeCreateWorkerModal, users} = props;
@@ -36,9 +35,9 @@ const CompanyTableRowComponent = (props) => {
             <TableCell component="th" scope="row">
                 {name}
             </TableCell>
-            <TableCell align="right">{address}</TableCell>
-            <TableCell align="right">{email}</TableCell>
-            <TableCell align="right" >
+            <TableCell >{address}</TableCell>
+            <TableCell >{email}</TableCell>
+            <TableCell >
                 <span className='plus' onClick={addWorker}>
                     <img  src={plus} alt={'plus'}/>
                 </span>
@@ -66,7 +65,7 @@ const CompanyTableRowComponent = (props) => {
 
 
             </TableCell>
-            <TableCell align="right" onClick={()=>getModalEdit(id)} >
+            <TableCell  onClick={()=>getModalEdit(id)} >
                 <span className='plus'>
                     <img src={edit} alt='edit'/>
                 </span>

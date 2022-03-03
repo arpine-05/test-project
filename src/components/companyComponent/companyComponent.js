@@ -17,10 +17,10 @@ const CompanyComponent = (props) => {
         <TableHead>
           <TableRow>
             <TableCell><h4>Company name</h4></TableCell>
-            <TableCell align="right"><h4>Company address</h4> </TableCell>
-            <TableCell align="right"><h4>Company email</h4></TableCell>
-            <TableCell align="right"><h4>Company workers</h4></TableCell>
-            <TableCell align="right"><h4>Edit company </h4></TableCell>
+            <TableCell ><h4>Company address</h4> </TableCell>
+            <TableCell ><h4>Company email</h4></TableCell>
+            <TableCell ><h4>Company workers</h4></TableCell>
+            <TableCell ><h4>Edit company </h4></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

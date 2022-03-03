@@ -1,17 +1,16 @@
-import './createCompanyComponent.scss'
 import {useForm} from 'react-hook-form'
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import './editCompanyComponent.scss'
 import {
-    createCompany,
     editCompany,
     getCompanies,
-    getCompany,
+    getCompany, getCompanyData,
     getMessage,
     getResponse
 } from "../../redux/companies/actions";
 
-const CreateCompanyComponent = (props) => {
+const EditCompanyComponent = (props) => {
     const {closeModal} = props;
     const dispatch = useDispatch();
     const {company, responseMes, message} = useSelector(state => state.companies)
@@ -22,40 +21,39 @@ const CreateCompanyComponent = (props) => {
             email: ''
         }
     });
-    const[address, setAddress] = useState()
+    const [inputValue, setinputValue] = useState(false)
     const editDefault = () => {
-        setValue('address', company.address)
         setValue('name', company.name)
+        setValue('address', company.address)
         setValue('email', company.email)
     }
-    // useEffect(() => {
-    //     if (title === 'edit') {
-    //         editDefault()
-    //
-    //     }
-    //
-    // }, [])
-
-
-
-    const onSubmit = async (data) => {
-        // if (title === 'create') {
-            await dispatch(createCompany(data))
-            await dispatch(getCompanies())
-        // } else {
-        //     await dispatch(editCompany(company.id, data))
-        //     await dispatch(getCompany(company.id))
-        //     await dispatch(getCompanies())
-        // }
+    useEffect(() => {
+        if (!inputValue) {
+            editDefault()
+        }
+    }, [editDefault])
+    const changeInputValue = () => {
+        setinputValue(true)
     }
+    const onSubmit = async (data) => {
+
+        await dispatch(editCompany(company.id, data))
+        await dispatch(getCompany(company.id))
+        setinputValue(false)
+        await dispatch(getCompanies())
+
+    }
+
     if (responseMes?.id) {
         closeModal()
 
     }
     useEffect(() => {
         return () => {
+            dispatch(getCompanyData({}))
             dispatch(getMessage([]))
             dispatch(getResponse(5))
+            setinputValue(false)
         }
     }, [])
     return (
@@ -63,13 +61,17 @@ const CreateCompanyComponent = (props) => {
             <div className='close-button'>
                 <span className="close" onClick={closeModal}>&times;</span>
             </div>
-            <h3> Create company </h3>
+            <h3> Edit company </h3>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='input-wrapper'>
                     <h4>Name</h4>
                     <input
                         className={errors?.address?.type === 'required' || errors?.address?.type === 'maxLength' ? 'input-item-invalid' : ''}
-                        {...register('name', {required: true, maxLength: 100})}
+                        {...register('name', {
+                            required: true, maxLength: 100,
+                            onChange: () => changeInputValue()
+
+                        })}
                         placeholder={'name'}
                     />
                     {errors.name && errors.name.type === 'required' && <p className='error'>This is required</p>}
@@ -80,7 +82,7 @@ const CreateCompanyComponent = (props) => {
                     <h4>Address</h4>
                     <input
                         className={errors?.address?.type === 'required' || errors?.address?.type === 'maxLength' ? 'input-item-invalid' : ''}
-                        {...register('address', {required: true, maxLength: 100})}
+                        {...register('address', {required: true, maxLength: 100, onChange: () => changeInputValue()})}
                         placeholder={'address'}
                     />
                     {errors.address && errors.address.type === 'required' && <p className='error'>This is required</p>}
@@ -92,6 +94,7 @@ const CreateCompanyComponent = (props) => {
                     <input className={errors.email ? 'input-item-invalid' : ''}
                            {...register('email', {
                                required: true,
+                               onChange: () => changeInputValue(),
                                pattern: {
                                    value: /\S+@\S+.\S+/,
                                    message: 'Entered value does not match email format'
@@ -111,7 +114,7 @@ const CreateCompanyComponent = (props) => {
                     }
                 </div>
                 <div className='button-div'>
-                    <button type={'submit'}> Create</button>
+                    <button type={'submit'}>Edit</button>
 
                 </div>
             </form>
@@ -119,4 +122,4 @@ const CreateCompanyComponent = (props) => {
     )
 }
 
-export default CreateCompanyComponent;
+export default EditCompanyComponent;

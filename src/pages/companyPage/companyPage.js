@@ -7,42 +7,46 @@ import LoaderComponent from "../../components/loaderComponent/loaderComponent";
 import WorkersComponent from "../../components/workersComponent/workersComponent";
 import {getCompanies, getCompany} from "../../redux/companies/actions";
 import CreateWorkerComponent from "../../components/createWorkerComponent/createWorkerComponent";
+import EditCompanyComponent from "../../components/editCompanyComponent/editCompanyComponent";
 
 
 
 const CompanyPage = ()=>{
-    const [modalTitle, setModalTitle] = useState('create')
     const [showModal, setShowModal] = useState(false);
     const [showWorkersModal, setShowWorkersModal] = useState(false);
     const[addWorkerModal, setAddWorkerModal] = useState(false)
+    const[showEditComponent, setShowEditComponent] = useState(false)
     const dispatch = useDispatch();
     const {companies, isLoader, message} = useSelector(state=>state.companies)
     const {workers} = useSelector(state=>state.workers)
     const getModalCreate = useCallback(async ()=> {
         await setShowModal(!showModal)
-        await  setModalTitle('create');
 
-    }, [modalTitle, showModal])
+    }, [ showModal])
+
     const getModalEdit = useCallback((id)=> {
-        setShowModal(!showModal)
-        setModalTitle('edit');
         dispatch(getCompany(id))
-    }, [showModal, modalTitle])
+        setShowEditComponent(!showEditComponent)
+    }, [showModal])
     const getWorkersModal =  useCallback(()=> setShowWorkersModal(!showWorkersModal), [showWorkersModal])
     const closeWorkersModal = useCallback(() =>setShowWorkersModal(false), [showWorkersModal])
     const closeModal = useCallback(()=> setShowModal(false), [showModal])
+   const closeEditComponent = useCallback(()=> setShowEditComponent(false), [showEditComponent])
     useEffect(()=>{
         dispatch(getCompanies())
     }, [])
    const closeCreateWorkerModal = useCallback(()=> setAddWorkerModal(!addWorkerModal), [addWorkerModal])
     return(
     <div className='company-page'>
-        <div className={`${showModal || isLoader || showWorkersModal || addWorkerModal ? 'background' : ''}`}></div>
+        <div className={`${showModal || showEditComponent || isLoader || showWorkersModal || addWorkerModal ? 'background' : ''}`}></div>
         {
             isLoader && <LoaderComponent/>
         }
         {
-           showModal && <CreateCompanyComponent setModalTitle={setModalTitle} closeModal={closeModal} title={modalTitle}/>
+            showEditComponent && <EditCompanyComponent closeModal={closeEditComponent} />
+        }
+        {
+           showModal && <CreateCompanyComponent  closeModal={closeModal} />
         }
         {
             showWorkersModal   && <WorkersComponent closeWorkersModal={closeWorkersModal}/>

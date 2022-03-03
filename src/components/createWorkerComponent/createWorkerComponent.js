@@ -17,6 +17,7 @@ const CreateWorkerComponent = (props) => {
         }
     });
     const onSubmit =async (data) => {
+
        await dispatch(createWorker(company.id, data))
     }
     if(responseMes?.id){
@@ -29,9 +30,7 @@ const CreateWorkerComponent = (props) => {
             dispatch(getResponse(''))
         }
     }, [])
-
     return (
-
         <div className='create-worker-comp'>
             <div className='close-button'>
                 <span className="close" onClick={closeModal}>&times;</span>
