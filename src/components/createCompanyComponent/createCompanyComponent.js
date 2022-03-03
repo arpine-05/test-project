@@ -4,9 +4,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
     createCompany,
-    editCompany,
     getCompanies,
-    getCompany,
     getMessage,
     getResponse
 } from "../../redux/companies/actions";
@@ -22,31 +20,18 @@ const CreateCompanyComponent = (props) => {
             email: ''
         }
     });
-    const[address, setAddress] = useState()
     const editDefault = () => {
         setValue('address', company.address)
         setValue('name', company.name)
         setValue('email', company.email)
     }
-    // useEffect(() => {
-    //     if (title === 'edit') {
-    //         editDefault()
-    //
-    //     }
-    //
-    // }, [])
+
 
 
 
     const onSubmit = async (data) => {
-        // if (title === 'create') {
             await dispatch(createCompany(data))
             await dispatch(getCompanies())
-        // } else {
-        //     await dispatch(editCompany(company.id, data))
-        //     await dispatch(getCompany(company.id))
-        //     await dispatch(getCompanies())
-        // }
     }
     if (responseMes?.id) {
         closeModal()

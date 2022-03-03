@@ -3,13 +3,19 @@ import React, {useEffect} from "react";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {createWorker, getMessage, getResponse} from "../../redux/workers/actions";
+import * as yup from 'yup';
 
 const CreateWorkerComponent = (props) => {
     const {closeModal} = props;
     const {company} = useSelector(state=> state.companies);
     const {message, responseMes} = useSelector(state=> state.workers);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+     const phoneRegExp =
+        /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/;
+
+
     const {register, formState: {errors}, handleSubmit, control, setValue, getValues} = useForm({
+
         defaultValues: {
             address: '',
             name: '',
@@ -35,6 +41,7 @@ const CreateWorkerComponent = (props) => {
             <div className='close-button'>
                 <span className="close" onClick={closeModal}>&times;</span>
             </div>
+            <h3>Create worker</h3>
             <form onSubmit={handleSubmit(onSubmit)} className='create-worker'>
                 <div className='input-wrapper'>
                     <h4>Address</h4>
@@ -48,12 +55,19 @@ const CreateWorkerComponent = (props) => {
                 </div>
                 <div className='input-wrapper'>
                     <h4>Mobile</h4>
-                    <input type={'text'} className={errors?.mobile?.type === 'required' ? 'input-item-invalid' : ''}
-                           {...register('mobile', {required: true})}
+                    <input type={'text'} className={errors?.mobile?.type === 'required' || errors?.mobile?.type === 'pattern' ? 'input-item-invalid' : ''}
+                           {...register('mobile', {required: true,
+                               pattern:{
+                                   value: /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/,
+                                   message:'does not valid ',
+
+                               },})}
                            placeholder={'mobile'}
                     />
                     {errors.mobile && errors.mobile.type === 'required' && <p className='error'>This is required</p>}
-
+                    {
+                        errors?.mobile &&  errors?.mobile?.type === 'pattern' &&   <p className='error'>{errors?.mobile.message}</p>
+                    }
                 </div>
                 <div className='input-wrapper'>
                     <h4>Name</h4>

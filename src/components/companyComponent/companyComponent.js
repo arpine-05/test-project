@@ -16,11 +16,11 @@ const CompanyComponent = (props) => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell><h4>Company name</h4></TableCell>
-            <TableCell ><h4>Company address</h4> </TableCell>
-            <TableCell ><h4>Company email</h4></TableCell>
-            <TableCell ><h4>Company workers</h4></TableCell>
-            <TableCell ><h4>Edit company </h4></TableCell>
+            <TableCell><h3>Company name</h3></TableCell>
+            <TableCell ><h3>Company address</h3> </TableCell>
+            <TableCell ><h3>Company email</h3></TableCell>
+            <TableCell ><h3>Company workers</h3></TableCell>
+            <TableCell ><h3>Edit company </h3></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

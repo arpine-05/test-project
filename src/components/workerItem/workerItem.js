@@ -116,13 +116,22 @@ const WorkerItem = (props) => {
                         <div className='input-wrapper'>
                             <h4>Mobile</h4>
                             <input type={'text'}
-                                   className={errors?.mobile?.type === 'required' ? 'input-item-invalid' : ''}
-                                   {...register('mobile', {required: true,onChange: () => changeInputValue()}
+                                   className={errors?.mobile?.type === 'required' || errors?.mobile?.type === 'pattern'  ? 'input-item-invalid' : ''}
+                                   {...register('mobile', {required: true,
+                                       pattern:{
+                                       value: /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/,
+                                           message:'does not valid ',
+
+                                       },
+                                       onChange: () => changeInputValue()}
                                    )}
                                    placeholder={'mobile'}
                             />
                             {errors.mobile && errors.mobile.type === 'required' &&
                             <p className='error'>This is required</p>}
+                            {
+                                errors?.mobile &&  errors?.mobile?.type === 'pattern' &&   <p className='error'>{errors?.mobile.message}</p>
+                            }
 
                         </div>
                         <div className='input-wrapper'>
