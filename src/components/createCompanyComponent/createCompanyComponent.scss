@@ -9,17 +9,18 @@
     left: 8%;
     .button-div{
         display: flex;
-        justify-content: end;
     }
     h3{
         text-transform: capitalize;
+        margin: 0;
     }
 
     @media(max-width: 991px){
         left: 15px;
     }
     button{
-        margin: 10px 0;
+        margin-top: 10px ;
+        margin-left: auto;
         padding: 14px 36px;
         border: none;
         cursor: pointer;

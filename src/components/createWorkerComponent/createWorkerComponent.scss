@@ -8,6 +8,9 @@
   border: 1px solid #202041;
   border-radius: 10px;
   left: 8%;
+  h3{
+    margin: 0;
+  }
   @media(max-width: 991px){
     left: 15px;
   }
@@ -23,7 +26,6 @@
   .create-worker{
 .create-button{
   display: flex;
-  justify-content: end;
 }
     input{
       width: 98%;
@@ -50,10 +52,12 @@
       }
     }
     button{
-      margin: 10px 0;
       padding: 14px 36px;
       border: none;
       cursor: pointer;
+      margin-top: 10px;
+      margin-left: auto;
+
       color:#ffffff;
       font-size: 16px;
       border-radius: 10px;

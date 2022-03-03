@@ -21,13 +21,13 @@
   .create-company {
     width: 100%;
     display: flex;
-    justify-content: end;
+    margin-bottom: 20px;
     @media(max-width: 991px) {
       justify-content: center;
     }
 
     button {
-      margin: 10px 0;
+      margin-left: auto;
       padding: 14px 36px;
       border: none;
       cursor: pointer;
