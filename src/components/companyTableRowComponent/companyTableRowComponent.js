@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import {useDispatch, useSelector} from "react-redux";
-import {getCompanyData} from "../../redux/companies/actions";
+import {getCompanies, getCompanyData} from "../../redux/companies/actions";
 import {getWorkers} from "../../redux/workers/actions";
 import plus from '../../images/plus.png';
 import edit from '../../images/edit.png';
@@ -11,9 +11,9 @@ const CompanyTableRowComponent = (props) => {
     const dispatch = useDispatch();
     const [showWorkers, setShowWorkers] = useState(false)
     const {workers} = useSelector(state=> state.workers);
-    const addWorker = ()=>{
-        closeCreateWorkerModal()
-        dispatch(getCompanyData({name, email, address, id}))
+    const addWorker =async ()=>{
+        await closeCreateWorkerModal()
+         await dispatch(getCompanyData({name, email, address, id}))
     }
     const getWorkersData = async ()=>{
       await  dispatch(getWorkers(id))

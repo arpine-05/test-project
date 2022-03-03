@@ -21,39 +21,66 @@ const CompanyPage = ()=>{
     const {workers} = useSelector(state=>state.workers)
     const getModalCreate = useCallback(async ()=> {
         await setShowModal(!showModal)
-
+        if(!showModal) document.body.style.overflow = "hidden"
     }, [ showModal])
 
     const getModalEdit = useCallback((id)=> {
         dispatch(getCompany(id))
         setShowEditComponent(!showEditComponent)
+        if(!showEditComponent) document.body.style.overflow = "hidden"
     }, [showModal])
-    const getWorkersModal =  useCallback(()=> setShowWorkersModal(!showWorkersModal), [showWorkersModal])
-    const closeWorkersModal = useCallback(() =>setShowWorkersModal(false), [showWorkersModal])
-    const closeModal = useCallback(()=> setShowModal(false), [showModal])
-   const closeEditComponent = useCallback(()=> setShowEditComponent(false), [showEditComponent])
+
+    const getWorkersModal =  useCallback(()=> {
+        setShowWorkersModal(!showWorkersModal)
+        document.body.style.overflow = "hidden"
+
+    }, [showWorkersModal])
+
+    const closeWorkersModal = useCallback(() =>{
+        setShowWorkersModal(false)
+        document.body.style.overflow = "auto"
+
+    }, [showWorkersModal])
+
+    const closeModal = useCallback(()=> {
+        setShowModal(false)
+        document.body.style.overflow = "auto"
+    }, [showModal])
+   const closeEditComponent = useCallback(()=> {
+       setShowEditComponent(false)
+       document.body.style.overflow = "auto"
+   }, [showEditComponent])
     useEffect(()=>{
         dispatch(getCompanies())
     }, [])
-   const closeCreateWorkerModal = useCallback(()=> setAddWorkerModal(!addWorkerModal), [addWorkerModal])
+   const closeCreateWorkerModal = useCallback(()=> {
+       setAddWorkerModal(!addWorkerModal)
+       if(!addWorkerModal) {
+           document.body.style.overflow = "hidden"
+       }else {
+           document.body.style.overflow = "auto"
+       }
+   }, [addWorkerModal])
     return(
     <div className='company-page'>
-        <div className={`${showModal || showEditComponent || isLoader || showWorkersModal || addWorkerModal ? 'background' : ''}`}></div>
-        {
-            isLoader && <LoaderComponent/>
-        }
-        {
-            showEditComponent && <EditCompanyComponent closeModal={closeEditComponent} />
-        }
-        {
-           showModal && <CreateCompanyComponent  closeModal={closeModal} />
-        }
-        {
-            showWorkersModal   && <WorkersComponent closeWorkersModal={closeWorkersModal}/>
-        }
-        {
-            addWorkerModal && <CreateWorkerComponent closeModal={closeCreateWorkerModal}/>
-        }
+        <div className={`${showModal || showEditComponent || isLoader || showWorkersModal || addWorkerModal ? 'background' : ''}`}>
+            {
+                isLoader && <LoaderComponent/>
+            }
+            {
+                showEditComponent && <EditCompanyComponent closeModal={closeEditComponent} />
+            }
+            {
+                showModal && <CreateCompanyComponent  closeModal={closeModal} />
+            }
+            {
+                showWorkersModal   && <WorkersComponent closeWorkersModal={closeWorkersModal}/>
+            }
+            {
+                addWorkerModal && <CreateWorkerComponent closeModal={closeCreateWorkerModal}/>
+            }
+        </div>
+
         <h2>About your companies</h2>
      <div className='create-company'>
          <button onClick={getModalCreate}> + Create new comapny</button>

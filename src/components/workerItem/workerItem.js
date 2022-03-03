@@ -58,12 +58,11 @@ const WorkerItem = (props) => {
     }
     const deleteWorkerData = async () => {
         await dispatch(deleteWorker(companyId, id))
-
         await dispatch(getWorkers(company.id))
-
     }
     const cancelUpdate = () => {
         dispatch(getWorker(companyId, id))
+        setShowEditForm(!showEditForm)
 
     }
     const closeDeleteModal = ()=> setDelete(!showDelete)
@@ -120,7 +119,7 @@ const WorkerItem = (props) => {
                                    {...register('mobile', {required: true,
                                        pattern:{
                                        value: /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/,
-                                           message:'does not valid ',
+                                           message:'Does not valid ',
 
                                        },
                                        onChange: () => changeInputValue()}

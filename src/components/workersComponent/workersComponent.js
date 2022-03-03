@@ -19,6 +19,7 @@ const WorkersComponent = (props)=>{
             <div className='close-button'  >
                 <span className="close" onClick={closeWorkersModal}>&times;</span>
             </div>
+            <h2>Workers list</h2>
            <div className={'title-info'}>
                <h3>Name</h3>
                <h3>Mobile</h3>

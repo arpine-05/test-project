@@ -1,12 +1,23 @@
 .worker-component{
-  position: absolute;
   width: 80%;
   z-index: 120;
   background-color: white;
   padding: 20px;
   border: 1px solid #202041;
   border-radius: 10px;
-  left: 8%;
+  position: absolute;
+  left: 50%;
+  margin: 0 auto;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 500px;
+  overflow-y: auto;
+  @media (max-height: 530px) {
+    position: relative;
+    top: unset;
+    left: unset;
+    transform: unset;
+  }
   .title-info{
     width: 90%;
     display: flex;
@@ -17,9 +28,7 @@
       width: 295px;
     }
   }
-  @media(max-width: 991px){
-    left: 15px;
-  }
+
   button{
     margin: 10px 0;
     padding: 14px 36px;

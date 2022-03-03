@@ -6,7 +6,16 @@
     padding: 20px;
     border: 1px solid #202041;
     border-radius: 10px;
-    left: 8%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    @media (max-height: 530px) {
+        position: relative;
+        top: unset;
+        left: unset;
+        transform: unset;
+        margin: 0 auto;
+    }
     .button-div{
         display: flex;
     }
@@ -15,9 +24,7 @@
         margin: 0;
     }
 
-    @media(max-width: 991px){
-        left: 15px;
-    }
+
     button{
         margin-top: 10px ;
         margin-left: auto;

@@ -1,7 +1,7 @@
 import {useForm} from 'react-hook-form'
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import './editCompanyComponent.scss'
+import './editCompanyComponent.scss';
 import {
     editCompany,
     getCompanies,
@@ -43,7 +43,6 @@ const EditCompanyComponent = (props) => {
         await dispatch(getCompanies())
 
     }
-
     if (responseMes?.id) {
         closeModal()
 
@@ -57,7 +56,7 @@ const EditCompanyComponent = (props) => {
         }
     }, [])
     return (
-        <div className='company-create'>
+        <div className='edit-company-create'>
             <div className='close-button'>
                 <span className="close" onClick={closeModal}>&times;</span>
             </div>

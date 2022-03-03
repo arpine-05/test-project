@@ -3,7 +3,7 @@ import React, {useEffect} from "react";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {createWorker, getMessage, getResponse} from "../../redux/workers/actions";
-import * as yup from 'yup';
+import {getCompanies} from "../../redux/companies/actions";
 
 const CreateWorkerComponent = (props) => {
     const {closeModal} = props;
@@ -25,6 +25,8 @@ const CreateWorkerComponent = (props) => {
     const onSubmit =async (data) => {
 
        await dispatch(createWorker(company.id, data))
+        await dispatch(getCompanies())
+
     }
     if(responseMes?.id){
          closeModal()
@@ -36,6 +38,10 @@ const CreateWorkerComponent = (props) => {
             dispatch(getResponse(''))
         }
     }, [])
+
+    const name = message?.filter(i=> i.includes('name'))
+    const mobile = message?.filter(i=> i.includes('mobile'))
+    const address = message?.filter(i=> i.includes('address'))
     return (
         <div className='create-worker-comp'>
             <div className='close-button'>
@@ -49,6 +55,11 @@ const CreateWorkerComponent = (props) => {
                            {...register('address', {required: true, maxLength: 100})}
                            placeholder={'address'}
                     />
+                    {address?.map(str=> {
+                       const newStr = str.charAt(0).toUpperCase() + str.slice(1)
+                        return(<p className='error'>{newStr}</p>)
+
+                    })}
                     {errors.address && errors.address.type === 'required' && <p className='error'>This is required</p>}
                     {errors.address && errors.address.type === 'maxLength' && <p className='error'>Max length is 100</p>}
 
@@ -59,11 +70,15 @@ const CreateWorkerComponent = (props) => {
                            {...register('mobile', {required: true,
                                pattern:{
                                    value: /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/,
-                                   message:'does not valid ',
+                                   message:'Does not valid ',
 
                                },})}
                            placeholder={'mobile'}
                     />
+                    {mobile?.map(str=> {
+                        const newStr = str.charAt(0).toUpperCase() + str.slice(1)
+                        return(<p className='error'>{newStr}</p>)
+                    })}
                     {errors.mobile && errors.mobile.type === 'required' && <p className='error'>This is required</p>}
                     {
                         errors?.mobile &&  errors?.mobile?.type === 'pattern' &&   <p className='error'>{errors?.mobile.message}</p>
@@ -75,14 +90,17 @@ const CreateWorkerComponent = (props) => {
                            {...register('name', {required: true, maxLength: 100})}
                            placeholder={'name'}
                     />
+                    {name?.map(str=> {
+                        const newStr = str.charAt(0).toUpperCase() + str.slice(1)
+                        return(<p className='error'>{newStr}</p>)
+
+                    })}
                     {errors.name && errors.name.type === 'maxLength' && <p className='error'>Max length is 100</p>}
                     {errors.name && errors.name.type === 'required' && <p className='error'>This is required</p>}
 
                 </div>
                 <div>
-                    {
-                        message?.map((i, index)=><p key={index}>{i}</p>)
-                    }
+
                 </div>
                <div className='create-button'>
                    <button type={'submit'}>Create</button>
