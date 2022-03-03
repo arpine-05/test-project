@@ -1,0 +1,7 @@
+export const GET_WORKERS = 'GET_WORKERS';
+export const GET_MESSAGE = 'GET_MESSAGE';
+export const SET_IS_LOADER = 'SET_IS_LOADER';
+export const EDIT_WORKER_RECORD = 'EDIT_WORKER_RECORD';
+export const GET_WORKER = 'GET_WORKER';
+export const DELETE_WORKER = 'DELETE_WORKER'
+export const GET_RESPONSE = 'GET_RESPONSE'

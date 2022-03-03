@@ -1,0 +1,45 @@
+.company-page {
+  padding: 20px ;
+  position: relative;
+
+
+  h2 {
+    color: #3684d9;
+  }
+
+  .background {
+    position: fixed;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, .5);
+    top: 0;
+    left: 0;
+    z-index: 120;
+  }
+
+  .create-company {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    @media(max-width: 991px) {
+      justify-content: center;
+    }
+
+    button {
+      margin: 10px 0;
+      padding: 14px 36px;
+      border: none;
+      cursor: pointer;
+      color: #ffffff;
+      font-size: 16px;
+      border-radius: 10px;
+      background: linear-gradient(to right, #13b5f3, #3684d9);
+      @media(max-width: 991px) {
+        padding: 14px;
+
+      }
+
+    }
+  }
+}

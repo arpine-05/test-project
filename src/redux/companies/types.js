@@ -1,0 +1,6 @@
+export const GET_COMPANIES = 'GET_COMPANIES';
+export  const SET_IS_LOADER = 'SET_IS_LOADER';
+export const EDIT_COMPANY_RECORD = 'EDIT_COMPANY_RECORD';
+export const GET_MESSAGE = 'GET_MESSAGE';
+export const GET_COMPANY_DATA = 'GET_COMPANY_DATA'
+export const GET_RESPONSE = 'GET_RESPONSE'

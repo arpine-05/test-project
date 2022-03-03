@@ -1,0 +1,42 @@
+
+.worker-tab {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+    justify-content: end;
+
+    span {
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        height: 25px;
+        width: 25px;
+        border: 1px solid grey;
+        border-radius: 50%;
+      @media(max-width: 725px){
+        //margin-
+        height: 22px;
+        width: 22px;
+      }
+    }
+  .more{
+    cursor: pointer;
+    @media(max-width: 725px){
+      //margin-top: 10px;
+    }
+  }
+  .worker-circle {
+    margin-right: 5px;
+      cursor: pointer;
+  }
+
+}
+.plus{
+  margin-right: 5px;
+  img{
+    cursor: pointer;
+
+    width: 25px;
+    height: 25px;
+  }
+}
