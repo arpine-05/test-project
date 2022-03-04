@@ -23,13 +23,13 @@
     transform: unset;
   }
   .title-info{
-    width: 90%;
-    display: flex;
+    width: 83%;
     @media(max-width: 560px){
       width: 80%;
     }
-    h3{
-      width: 295px;
+    td{
+      font-weight: bold;
+      width: 33%;
     }
   }
 
