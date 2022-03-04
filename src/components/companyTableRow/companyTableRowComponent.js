@@ -60,10 +60,7 @@ const CompanyTableRowComponent = (props) => {
                             users.length > 3 && <span className={'more'} onClick={getWorkersData}>+{users.length - 3}</span>
                         }
                     </div>
-
                 }
-
-
             </TableCell>
             <TableCell  onClick={()=>getModalEdit(id)} >
                 <span className='plus'>
