@@ -108,19 +108,38 @@
   .edit-worker-form{
     margin-top:10px;
     form{
+      padding-bottom: 60px;
       .edit-workers-button{
-        display: flex;
-        justify-content: end;
-        button:last-child{
+        float: right;
+        .button-edit{
+          padding: 9px 20px;
+          border: none;
+          margin-right: 10px;
+          cursor: pointer;
+          color:#ffffff;
+          font-size: 16px;
+          border-radius: 10px;
+          background: linear-gradient(to right, #13b5f3, #3684d9);
+        }
+        .button-del{
           padding: 9px 20px;
           border: none;
           cursor: pointer;
           color:#ffffff;
           font-size: 16px;
           border-radius: 10px;
-          margin-left: 10px;
           background: linear-gradient(to right, #f70044,  #e51922);
         }
+        //button:last-child{
+        //  padding: 9px 20px;
+        //  border: none;
+        //  cursor: pointer;
+        //  color:#ffffff;
+        //  font-size: 16px;
+        //  border-radius: 10px;
+        //  margin-left: 10px;
+        //  background: linear-gradient(to right, #f70044,  #e51922);
+        //}
       }
       .input-wrapper{
         input{

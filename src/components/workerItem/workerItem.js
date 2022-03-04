@@ -4,6 +4,7 @@ import {useState} from "react";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteWorker, editWorker, getWorker, getWorkers} from "../../redux/workers/actions";
+import {getCompanies} from "../../redux/companies/actions";
 
 const WorkerItem = (props) => {
     const {name, mobile, address, id, companyId} = props;
@@ -59,6 +60,7 @@ const WorkerItem = (props) => {
     const deleteWorkerData = async () => {
         await dispatch(deleteWorker(companyId, id))
         await dispatch(getWorkers(company.id))
+        await dispatch(getCompanies())
     }
     const cancelUpdate = () => {
         dispatch(getWorker(companyId, id))
@@ -82,8 +84,8 @@ const WorkerItem = (props) => {
                     </table>
                 </div>
                 <div className='buttons'>
-                    <button onClick={getEditForm}>Edit</button>
-                    <button onClick={closeDeleteModal} >Delete</button>
+                    <button   onClick={getEditForm}>Edit</button>
+                    <button  onClick={closeDeleteModal} >Delete</button>
                 </div>
                 {
                     showDelete &&  <div className='delete-modal'>
@@ -147,8 +149,8 @@ const WorkerItem = (props) => {
 
                         </div>
                         <div className='edit-workers-button'>
-                            <button type={'submit'}>Save</button>
-                            <button onClick={cancelUpdate} type={'button'}>Cancel</button>
+                            <button className={'button-edit'} type={'submit'}>Save</button>
+                            <button className={'button-del'} onClick={cancelUpdate} type={'button'}>Cancel</button>
                         </div>
                     </form>
 

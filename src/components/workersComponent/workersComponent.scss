@@ -12,6 +12,9 @@
   transform: translate(-50%, -50%);
   max-height: 500px;
   overflow-y: auto;
+  h2{
+    color: black;
+  }
   @media (max-height: 530px) {
     position: relative;
     top: unset;
