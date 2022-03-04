@@ -29,7 +29,7 @@ const WorkersComponent = (props)=>{
             <div className={'workers'}>
                 {
                     workers?.length > 0 ?  workers?.map(i=> <WorkerItem key={i.id} {...i}/>) :
-                        <p>dont have users</p>
+                        <p>Dont have users</p>
 
 
                 }

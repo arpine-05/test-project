@@ -1,13 +1,13 @@
 import {useCallback, useEffect, useState} from 'react';
-import CompanyComponent from '../../components/companyComponent/companyComponent'
-import CreateCompanyComponent from '../../components/createCompanyComponent/createCompanyComponent'
+import CompanyComponent from '../../components/company/companyComponent'
+import CreateCompanyComponent from '../../components/createCompany/createCompanyComponent'
 import './companyPage.scss'
 import {useDispatch, useSelector} from "react-redux";
-import LoaderComponent from "../../components/loaderComponent/loaderComponent";
-import WorkersComponent from "../../components/workersComponent/workersComponent";
+import LoaderComponent from "../../components/loader/loaderComponent";
+import WorkersComponent from "../../components/workers/workersComponent";
 import {getCompanies, getCompany} from "../../redux/companies/actions";
-import CreateWorkerComponent from "../../components/createWorkerComponent/createWorkerComponent";
-import EditCompanyComponent from "../../components/editCompanyComponent/editCompanyComponent";
+import CreateWorkerComponent from "../../components/createWorker/createWorkerComponent";
+import EditCompanyComponent from "../../components/editCompany/editCompanyComponent";
 
 
 
@@ -85,10 +85,12 @@ const CompanyPage = ()=>{
      <div className='create-company'>
          <button onClick={getModalCreate}> + Create new comapny</button>
      </div>
-     <CompanyComponent closeCreateWorkerModal={closeCreateWorkerModal}
-                       getModalEdit={getModalEdit}
-                       getWorkersModal={getWorkersModal}
-     />
+    <div className='table'>
+        <CompanyComponent closeCreateWorkerModal={closeCreateWorkerModal}
+                          getModalEdit={getModalEdit}
+                          getWorkersModal={getWorkersModal}
+        />
+    </div>
      </div>
     )
 }

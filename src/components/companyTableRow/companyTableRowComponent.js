@@ -32,12 +32,12 @@ const CompanyTableRowComponent = (props) => {
             key={name}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
         >
-            <TableCell component="th" scope="row">
+            <TableCell align={'middle'} component="th" scope="row">
                 {name}
             </TableCell>
-            <TableCell >{address}</TableCell>
-            <TableCell >{email}</TableCell>
-            <TableCell >
+            <TableCell align={'middle'}>{address}</TableCell>
+            <TableCell align={'middle'} >{email}</TableCell>
+            <TableCell align={'middle'}>
                 <span className='plus' onClick={addWorker}>
                     <img  src={plus} alt={'plus'}/>
                 </span>
