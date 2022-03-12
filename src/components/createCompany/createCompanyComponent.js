@@ -2,15 +2,11 @@ import './createCompanyComponent.scss'
 import {useForm} from 'react-hook-form'
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {
-    getMessage,
-    getResponse
-} from "../../redux/companies/actions";
+
 import { companiesOperations } from '../../store/companies';
 
 const CreateCompanyComponent = ({closeModal}) => {
     const dispatch = useDispatch();
-    const {company, responseMes, message} = useSelector(state => state.companies)
     
     const {register, formState: {errors}, handleSubmit, control, setValue, getValues} = useForm({
         defaultValues: {
@@ -24,20 +20,12 @@ const CreateCompanyComponent = ({closeModal}) => {
     const onSubmit = (data) => {
         const {addCompany} = companiesOperations
         dispatch(addCompany(data))
-    }
-
-    if (responseMes?.id) {
         closeModal()
-
     }
-    useEffect(() => {
-        return () => {
-            dispatch(getMessage([]))
-            dispatch(getResponse(5))
-        }
-    }, [])
 
     
+    const message = []
+
     return (
         <div className='company-create'>
             <div className='close-button'>

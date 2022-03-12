@@ -2,8 +2,6 @@ import React, {useState} from 'react';
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import {useDispatch, useSelector} from "react-redux";
-import {getCompanies, getCompanyData} from "../../redux/companies/actions";
-import {getWorkers} from "../../redux/workers/actions";
 import plus from '../../images/plus.png';
 import edit from '../../images/edit.png';
 import companiesSlice from '../../store/companies';
@@ -31,8 +29,6 @@ const CompanyTableRowComponent = ({companyData, closeCreateWorkerModal, getWorke
 
     const showWorkersFunc =()=>{
         setShowWorkers(!showWorkers)
-        dispatch(getWorkers(id))
-
     }
 
     
