@@ -2,14 +2,14 @@ import './createWorkerComponent.scss';
 import React, {useEffect} from "react";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
-import {createWorker, getMessage, getResponse} from "../../redux/workers/actions";
-import {getCompanies} from "../../redux/companies/actions";
+import { companiesOperations, companiesSelectors } from '../../store/companies';
 
-const CreateWorkerComponent = (props) => {
-    const {closeModal} = props;
-    const {company} = useSelector(state=> state.companies);
-    const {message, responseMes} = useSelector(state=> state.workers);
+const CreateWorkerComponent = ({closeModal}) => {
+
+    const company = useSelector(companiesSelectors.companySelector)
+
     const dispatch = useDispatch();
+
      const phoneRegExp =
         /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/;
 
@@ -22,26 +22,19 @@ const CreateWorkerComponent = (props) => {
             mobile: ''
         }
     });
-    const onSubmit =async (data) => {
-
-       await dispatch(createWorker(company.id, data))
-        await dispatch(getCompanies())
-
-    }
-    if(responseMes?.id){
-         closeModal()
+    const onSubmit = (data) => {
+        const {addCompanyWorker } = companiesOperations
+        dispatch(addCompanyWorker(company.id, data))
+       
 
     }
-    useEffect(()=>{
-        return ()=>{
-            dispatch(getMessage([]))
-            dispatch(getResponse(''))
-        }
-    }, [])
+
+    const message = []
 
     const name = message?.filter(i=> i.includes('name'))
     const mobile = message?.filter(i=> i.includes('mobile'))
     const address = message?.filter(i=> i.includes('address'))
+
     return (
         <div className='create-worker-comp'>
             <div className='close-button'>

@@ -2,18 +2,16 @@ import {useForm} from 'react-hook-form'
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import './editCompanyComponent.scss';
-import {
-    editCompany,
-    getCompanies,
-    getCompany, getCompanyData,
-    getMessage,
-    getResponse
-} from "../../redux/companies/actions";
+
+import { companiesOperations, companiesSelectors } from '../../store/companies';
 
 const EditCompanyComponent = (props) => {
     const {closeModal} = props;
     const dispatch = useDispatch();
-    const {company, responseMes, message} = useSelector(state => state.companies)
+    const { responseMes, message} = useSelector(state => state.companies)
+
+    const company = useSelector(companiesSelectors.companySelector)
+
     const {register, formState: {errors}, handleSubmit, control, setValue, getValues} = useForm({
         defaultValues: {
             name: '',
@@ -21,27 +19,30 @@ const EditCompanyComponent = (props) => {
             email: ''
         }
     });
+
     const [inputValue, setinputValue] = useState(false)
+    
     const editDefault = () => {
         setValue('name', company.name)
         setValue('address', company.address)
         setValue('email', company.email)
     }
+    
     useEffect(() => {
         if (!inputValue) {
             editDefault()
         }
     }, [editDefault])
+
+
     const changeInputValue = () => {
         setinputValue(true)
     }
-    const onSubmit = async (data) => {
 
-        await dispatch(editCompany(company.id, data))
-        await dispatch(getCompany(company.id))
-        setinputValue(false)
-        await dispatch(getCompanies())
 
+    const onSubmit = (data) => {
+        const {editCompany} = companiesOperations
+        dispatch(editCompany(company.id, data))
     }
     if (responseMes?.id) {
         closeModal()
@@ -49,9 +50,6 @@ const EditCompanyComponent = (props) => {
     }
     useEffect(() => {
         return () => {
-            dispatch(getCompanyData({}))
-            dispatch(getMessage([]))
-            dispatch(getResponse(5))
             setinputValue(false)
         }
     }, [])

@@ -3,16 +3,15 @@ import {useForm} from 'react-hook-form'
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    createCompany,
-    getCompanies,
     getMessage,
     getResponse
 } from "../../redux/companies/actions";
+import { companiesOperations } from '../../store/companies';
 
-const CreateCompanyComponent = (props) => {
-    const {closeModal} = props;
+const CreateCompanyComponent = ({closeModal}) => {
     const dispatch = useDispatch();
     const {company, responseMes, message} = useSelector(state => state.companies)
+    
     const {register, formState: {errors}, handleSubmit, control, setValue, getValues} = useForm({
         defaultValues: {
             name: '',
@@ -20,19 +19,13 @@ const CreateCompanyComponent = (props) => {
             email: ''
         }
     });
-    const editDefault = () => {
-        setValue('address', company.address)
-        setValue('name', company.name)
-        setValue('email', company.email)
+
+
+    const onSubmit = (data) => {
+        const {addCompany} = companiesOperations
+        dispatch(addCompany(data))
     }
 
-
-
-
-    const onSubmit = async (data) => {
-            await dispatch(createCompany(data))
-            await dispatch(getCompanies())
-    }
     if (responseMes?.id) {
         closeModal()
 
@@ -43,6 +36,8 @@ const CreateCompanyComponent = (props) => {
             dispatch(getResponse(5))
         }
     }, [])
+
+    
     return (
         <div className='company-create'>
             <div className='close-button'>

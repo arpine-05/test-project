@@ -5,9 +5,10 @@ import './companyPage.scss'
 import {useDispatch, useSelector} from "react-redux";
 import LoaderComponent from "../../components/loader/loaderComponent";
 import WorkersComponent from "../../components/workers/workersComponent";
-import {getCompanies, getCompany} from "../../redux/companies/actions";
 import CreateWorkerComponent from "../../components/createWorker/createWorkerComponent";
 import EditCompanyComponent from "../../components/editCompany/editCompanyComponent";
+
+import companiesSlice, {  companiesOperations, companiesSelectors } from '../../store/companies'
 
 
 
@@ -16,25 +17,32 @@ const CompanyPage = ()=>{
     const [showWorkersModal, setShowWorkersModal] = useState(false);
     const[addWorkerModal, setAddWorkerModal] = useState(false)
     const[showEditComponent, setShowEditComponent] = useState(false)
-    const dispatch = useDispatch();
-    const {companies, isLoader, message} = useSelector(state=>state.companies)
-    const {workers} = useSelector(state=>state.workers)
-    const getModalCreate = useCallback(async ()=> {
-        await setShowModal(!showModal)
-        if(!showModal) document.body.style.overflow = "hidden"
-    }, [ showModal])
 
-    const getModalEdit = useCallback((id)=> {
-        dispatch(getCompany(id))
+    const dispatch = useDispatch();
+
+    const getModalCreate = () => {
+        setShowModal(!showModal)
+        if(!showModal) document.body.style.overflow = "hidden"
+    }
+
+
+    const isLoading = useSelector(companiesSelectors.isLoadingCompaniesSelector)
+
+    const { getAllCompanies } = companiesOperations
+
+    const { setCompany } = companiesSlice.actions
+
+    const getModalEdit = (id, companyData)=> {
+        dispatch(setCompany(companyData))
         setShowEditComponent(!showEditComponent)
         if(!showEditComponent) document.body.style.overflow = "hidden"
-    }, [showModal])
+    }
 
-    const getWorkersModal =  useCallback(()=> {
+    const getWorkersModal =  (id) => {
         setShowWorkersModal(!showWorkersModal)
         document.body.style.overflow = "hidden"
 
-    }, [showWorkersModal])
+    }
 
     const closeWorkersModal = useCallback(() =>{
         setShowWorkersModal(false)
@@ -50,22 +58,29 @@ const CompanyPage = ()=>{
        setShowEditComponent(false)
        document.body.style.overflow = "auto"
    }, [showEditComponent])
+
+
     useEffect(()=>{
-        dispatch(getCompanies())
+        dispatch(getAllCompanies())
     }, [])
-   const closeCreateWorkerModal = useCallback(()=> {
+
+
+   const closeCreateWorkerModal = ()=> {
        setAddWorkerModal(!addWorkerModal)
        if(!addWorkerModal) {
            document.body.style.overflow = "hidden"
        }else {
            document.body.style.overflow = "auto"
        }
-   }, [addWorkerModal])
+   }
+
+
+
     return(
     <div className='company-page'>
-        <div className={`${showModal || showEditComponent || isLoader || showWorkersModal || addWorkerModal ? 'background' : ''}`}>
+        <div className={`${showModal || showEditComponent || isLoading || showWorkersModal || addWorkerModal ? 'background' : ''}`}>
             {
-                isLoader && <LoaderComponent/>
+                isLoading && <LoaderComponent/>
             }
             {
                 showEditComponent && <EditCompanyComponent closeModal={closeEditComponent} />
@@ -83,7 +98,7 @@ const CompanyPage = ()=>{
 
         <h2>About your companies</h2>
      <div className='create-company'>
-         <button onClick={getModalCreate}> + Create new comapny</button>
+         <button onClick={getModalCreate}> + Create new company</button>
      </div>
     <div className='table'>
         <CompanyComponent closeCreateWorkerModal={closeCreateWorkerModal}

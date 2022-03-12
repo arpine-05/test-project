@@ -1,21 +1,25 @@
 import React, {useEffect} from 'react';
-import './workerItem.scss'
 import {useState} from "react";
 import {useForm} from "react-hook-form";
-import {useDispatch, useSelector} from "react-redux";
-import {deleteWorker, editWorker, getWorker, getWorkers} from "../../redux/workers/actions";
-import {getCompanies} from "../../redux/companies/actions";
+import {useDispatch} from "react-redux";
+import { companiesOperations } from '../../store/companies';
 
-const WorkerItem = (props) => {
-    const {name, mobile, address, id, companyId} = props;
-    const {worker} = useSelector(state => state.workers)
-    const {company} = useSelector(state => state.companies)
+import './workerItem.scss'
+
+const WorkerItem = ({workerData, closeCB}) => {
+    const [inputValue, setinputValue] = useState(false)
+    
+    const {name, mobile, address, id, companyId} = workerData    
+
    const [showDelete, setDelete] = useState(false)
-    const changeInputValue = () => {
+    
+   const changeInputValue = () => {
         setinputValue(true)
     }
-    const [inputValue, setinputValue] = useState(false)
+
+
     const dispatch = useDispatch();
+
     const {register, formState: {errors}, handleSubmit, control, setValue, getValues} = useForm({
         defaultValues: {
             address: '',
@@ -23,11 +27,14 @@ const WorkerItem = (props) => {
             mobile: ''
         }
     });
+
     const editDefault = () => {
-        setValue('address', worker.address)
-        setValue('name', worker.name)
-        setValue('mobile', worker.mobile)
+        setValue('address', workerData.address)
+        setValue('name', workerData.name)
+        setValue('mobile', workerData.mobile)
     }
+
+
     useEffect(() => {
         if(!inputValue){
             editDefault()
@@ -35,6 +42,7 @@ const WorkerItem = (props) => {
         }
 
     }, [editDefault]);
+
     useEffect(()=>{
         return ()=>{
             setinputValue(false)
@@ -42,32 +50,31 @@ const WorkerItem = (props) => {
     }, [])
 
     const [showEditForm, setShowEditForm] = useState(false);
+    
     const getEditForm = () => {
         setShowEditForm(!showEditForm)
-        if (!showEditForm) {
-            dispatch(getWorker(companyId, id))
-        }
+        
     };
 
-    const onSubmit = async (data) => {
-
-        await dispatch(editWorker(companyId, id, data))
-        await dispatch(getWorker(companyId, id))
-        setinputValue(false)
-
+    const onSubmit = (data) => {
+        const {editCompanyWorker} = companiesOperations
+        dispatch(editCompanyWorker(companyId, id, data))
+        setShowEditForm(false)
+        closeCB()
 
     }
-    const deleteWorkerData = async () => {
-        await dispatch(deleteWorker(companyId, id))
-        await dispatch(getWorkers(company.id))
-        await dispatch(getCompanies())
+    const deleteWorkerData = () => {
+        const {removeCompanyWorker} = companiesOperations
+
+        dispatch(removeCompanyWorker(companyId, id))
+
     }
     const cancelUpdate = () => {
-        dispatch(getWorker(companyId, id))
         setShowEditForm(!showEditForm)
 
     }
     const closeDeleteModal = ()=> setDelete(!showDelete)
+    
     return (
         <div className='worker-item'>
             <div className='edit-worker-item-flex'>
@@ -161,4 +168,4 @@ const WorkerItem = (props) => {
     )
 }
 
-export default React.memo(WorkerItem);
+export default WorkerItem

@@ -8,24 +8,29 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import CompanyTableRowComponent from "../companyTableRow/companyTableRowComponent";
 import {useSelector} from "react-redux";
+
+import { companiesSelectors } from '../../store/companies';
+
 const CompanyComponent = (props) => {
   const {getModalEdit, getWorkersModal, closeCreateWorkerModal} = props;
-  const {companies} = useSelector(state=> state.companies)
+  const companies = useSelector(companiesSelectors.allCompaniesSelector)
+
     return (
         <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align={'middle'} ><h3>Company name</h3></TableCell>
-            <TableCell align={'middle'}  ><h3>Company address</h3> </TableCell>
-            <TableCell align={'middle'} ><h3>Company email</h3></TableCell>
-            <TableCell align={'middle'}><h3>Company workers</h3></TableCell>
-            <TableCell align={'middle'}><h3>Edit company </h3></TableCell>
+            <TableCell  ><h3>Company name</h3></TableCell>
+            <TableCell  ><h3>Company address</h3> </TableCell>
+            <TableCell  ><h3>Company email</h3></TableCell>
+            <TableCell ><h3>Company workers</h3></TableCell>
+            <TableCell ><h3>Edit company </h3></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {companies?.map((company) => <CompanyTableRowComponent
-              key={company.id}{...company}
+              key={company.id}
+              companyData = {company}
               getModalEdit={getModalEdit}
               getWorkersModal={getWorkersModal}
               closeCreateWorkerModal={closeCreateWorkerModal}
