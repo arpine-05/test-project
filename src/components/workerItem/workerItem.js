@@ -67,6 +67,7 @@ const WorkerItem = ({workerData, closeCB}) => {
         const {removeCompanyWorker} = companiesOperations
 
         dispatch(removeCompanyWorker(companyId, id))
+        closeCB()
 
     }
     const cancelUpdate = () => {

@@ -1,7 +1,7 @@
 import './createCompanyComponent.scss'
 import {useForm} from 'react-hook-form'
-import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React from "react";
+import {useDispatch} from "react-redux";
 
 import { companiesOperations } from '../../store/companies';
 
